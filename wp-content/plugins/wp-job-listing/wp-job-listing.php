@@ -18,7 +18,8 @@ if ( ! defined('ABSPATH') )
 
 require_once (plugin_dir_path(__FILE__) . 'wp-job-cpt.php');
 require_once (plugin_dir_path(__FILE__) . 'wp-job-fields.php');
-// require_once (plugin_dir_path(__FILE__) . 'wp-job-render-admin.php');
+require_once (plugin_dir_path(__FILE__) . 'wp-job-settings.php');
+
 
 function ck8_admin_enqueue_scripts() {
     global $pagenow, $typenow;
@@ -33,18 +34,3 @@ function ck8_admin_enqueue_scripts() {
 }
 
 add_action( 'admin_enqueue_scripts', 'ck8_admin_enqueue_scripts' );
-
-function ck8_add_submenu_page() {
-    
-    add_submenu_page( 
-        'edit.php?post_type=job', 
-        'Reorder Jobs', 
-        'Reorder Jobs', 
-        'manage_options', 
-        'reorder_jobs', 
-        'reorder_admin_jobs_callback' 
-        );
-    
-}
-
-add_action( 'admin_menu', 'ck8_add_submenu_page' );
