@@ -17,6 +17,7 @@ add_action( 'admin_menu', 'ck8_add_submenu_page' );
 
 
 function reorder_admin_jobs_callback() {
+
     
     $args = array(
         'post_type'         => 'job',
@@ -43,7 +44,7 @@ function reorder_admin_jobs_callback() {
             <ul id="custom-type-list">
                 <?php while ($job_listing-> have_posts() ) : $job_listing->the_post(); ?>
                 
-                <li id="<?php the_id(); ?>"> <?php the_title(); ?> </li>
+                <li id="<?php esc_attr( the_id() ); ?>"> <?php esc_html( the_title() ); ?> </li>
                 <?php endwhile; ?>
             </ul>
         <?php else: ?>
@@ -53,5 +54,6 @@ function reorder_admin_jobs_callback() {
     </div>
     
     <?php
+    
     
 }
