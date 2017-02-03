@@ -4,8 +4,8 @@ function ck8_add_submenu_page() {
     
     add_submenu_page( 
         'edit.php?post_type=job', 
-        'Reorder Jobs', 
-        'Reorder Jobs', 
+        __( 'Reorder Jobs'), 
+        __( 'Reorder Jobs'), 
         'manage_options', 
         'reorder_jobs', 
         'reorder_admin_jobs_callback' 
@@ -14,7 +14,6 @@ function ck8_add_submenu_page() {
 }
 
 add_action( 'admin_menu', 'ck8_add_submenu_page' );
-
 
 function reorder_admin_jobs_callback() {
 
@@ -55,5 +54,33 @@ function reorder_admin_jobs_callback() {
     
     <?php
     
+}
+
+function ck8_save_reorder() {
+    
+    if( ! check_ajax_referer( 'wp-job-order', 'security' ) ) {
+        return wp_send_json_error( 'Invalid nonce' );
+    }
+    
+    if( ! current_user_can( 'manage_options' ) ) {   //manage_options is a WP capability. More in the codex
+        return wp_send_json_error( 'You cannot manage options' );
+    }
+    
+    $order = $_POST['order'];        //the order parameter of this super global variable was defined in reorder.js (line 19)
+    $counter = 0;
+    
+    foreach( $order as $item_id ) {
+        
+        $post = array (
+            'ID' => (int)$item_id,              //wp_update_post expects an integer, thus the (int)
+            'menu_order' => $counter,           //this counter which is set to 0 in line 70, is assigned to the first item_id
+        );
+        wp_update_post( $post );                //and saved
+        
+        $counter++;                             //then the second item_id will get an incremented number, when the loop runs again. This ensure the order is saved.
+    }
+    wp_send_json_success( 'Order saved' );
     
 }
+
+add_action( 'wp_ajax_save_sort', 'ck8_save_reorder' );   //Dynamic hook: in the next part slug wp_ajax_ you use the action you called in reorder.js (line 18)
