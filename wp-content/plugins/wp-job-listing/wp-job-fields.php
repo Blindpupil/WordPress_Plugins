@@ -14,7 +14,7 @@ function ck8_add_custom_metabox() {
 add_action('add_meta_boxes', 'ck8_add_custom_metabox');
 
 function ck8_meta_callback( $post ) {
-	wp_nonce_field( basename( __FILE__ ), 'ck8_jobs_nonce' );
+	wp_nonce_field( basename( __FILE__ ), 'ck8_jobs_nonce' );                       //nonce is number used once
 	$ck8_stored_meta = get_post_meta( $post->ID ); ?>
 
 	<div>
@@ -106,6 +106,7 @@ function ck8_meta_save( $post_id ) {
     $is_autosave = wp_is_post_autosave( $post_id );
     $is_revision = wp_is_post_revision( $post_id );
     $is_valid_nonce = ( isset( $_POST[ 'ck8_jobs_nonce' ] ) && wp_verify_nonce( $_POST[ 'ck8_jobs_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
+    
     // Exits script depending on save status
     if ( $is_autosave || $is_revision || !$is_valid_nonce ) {
         return;
