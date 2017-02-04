@@ -47,7 +47,7 @@ function reorder_admin_jobs_callback() {
                 <?php endwhile; ?>
             </ul>
         <?php else: ?>
-            <p> <?php _e( 'You hae no Jobs to sort.', 'wp-job-listing' ); ?> </p>
+            <p> <?php _e( 'You have no Jobs to sort.', 'wp-job-listing' ); ?> </p>
         <?php endif; ?>    
         
     </div>

@@ -19,6 +19,7 @@ if ( ! defined('ABSPATH') )
 require_once (plugin_dir_path(__FILE__) . 'wp-job-cpt.php');
 require_once (plugin_dir_path(__FILE__) . 'wp-job-fields.php');
 require_once (plugin_dir_path(__FILE__) . 'wp-job-settings.php');
+require_once (plugin_dir_path(__FILE__) . 'wp-job-shortcode.php');
 
 
 function ck8_admin_enqueue_scripts() {
